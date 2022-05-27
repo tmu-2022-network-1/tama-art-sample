@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="../style.css">
-    <title>venue</title>
+    <title>Venue</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
   </head>
   <body>
     <header class="container">
@@ -17,13 +23,14 @@
     <nav class="container">
       <ul class="navbar">
         <li class="navbar-item"><a href="../">TOP</a></li>
-        <li class="navbar-item"><a href="../event/">Events</a></li>
-        <li class="navbar-item"><a href="../venue/">Venues</a></li>
+        <li class="navbar-item"><a href="../event/">Event</a></li>
+        <li class="navbar-item"><a href="../venue/">Venue</a></li>
       </ul>
     </nav>
     <main class="container">
       <h1 id="title">Venue</h1>
       <div id="content"></div>
+      <div id="map"></div>
     </main>
     <footer class="footer">
       <div class="content has-text-centered">

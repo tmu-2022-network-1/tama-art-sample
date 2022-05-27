@@ -34,6 +34,7 @@ const renderVenue = (json) => {
 
   const venue = json.find((d) => d.id === id);
   if (venue) {
+    document.title = `${venue.name} | tama.potari`;
     document.getElementById("title").textContent = venue.name;
     document.getElementById("content").innerHTML = `
     ${venue.address}`;
@@ -41,3 +42,5 @@ const renderVenue = (json) => {
 }
 
 getData().then((json) => renderVenue(json));
+
+const map = L.map('map').setView([51.505, -0.09], 13);
