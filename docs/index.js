@@ -1,30 +1,29 @@
-const getData = async () => {
-  const endpoint =
-    "https://script.google.com/macros/s/AKfycbxYb6A56yxS_gLG_AkWxMODItAzBrzYYT8CT3Yvxel3UlgNhau-sJnH1ZbFM-Ho_GcQkA/exec";
-  try {
-    const response = await fetch(endpoint);
-    if (response.ok) {
-      const json = await response.json();
-      return json;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { getData } from './modules/getdata.js';
 
-const renderResponse = (res) => {
-  document.getElementById("response").value = JSON.stringify(res, null, 2);
+const renderVenues = (json) => {
+  // document.getElementById("response").value = JSON.stringify(json, null, 2);
 
-  document.getElementById("content").innerHTML = `<ul id="venues"></ul>`;
+  document.getElementById("content").innerHTML =
+    `<ul id="venues" class="columns is-multiline"></ul>`;
 
   const venues = document.getElementById("venues");
 
-  for (const venue of res) {
+  for (const venue of json.filter(d => d.name !== '')) {
     const venueNode = document.createElement("li");
-    venueNode.innerHTML = `<h3><a href="venue/?id=${venue.id}">${venue.name}</a></h3>
-    ${venue.address}`;
+    venueNode.className = 'column is-one-quarter';
+    venueNode.innerHTML = `
+      <div class="card">
+        <div class="card-content">
+          <h3 class="title is-5">
+            <a href="venue/?id=${venue.id}">${venue.name}</a>
+          </h3>
+          <div class="content is-small">
+            ${venue.address}
+          </div>
+        </div>
+      </div>`;
     venues.appendChild(venueNode);
   }
 };
 
-getData().then((json) => renderResponse(json));
+getData().then((json) => renderVenues(json));

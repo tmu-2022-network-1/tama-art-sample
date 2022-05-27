@@ -5,12 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>tama.potari</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <a href="/">TOP</a>
-    <h1 id="title">tama.potari</h1>
-    <div id="content"></div>
-    <textarea id="response" rows="10" cols="50"></textarea>
-    <script src="index.js" defer></script>
+    <header class="container">
+      <div class="block">
+        <h1 id="title" class="title">tama.potari</h1>
+        <h2 class="subtitle">Art infomation of Tama area</h2>
+      </div>
+    </header>
+    <nav class="container">
+      <ul class="navbar">
+        <li class="navbar-item"><a href="/">TOP</a></li>
+        <li class="navbar-item"><a href="event">Events</a></li>
+        <li class="navbar-item"><a href="venue">Venues</a></li>
+      </ul>
+    </nav>
+    <main class="container">
+      <div id="content"></div>
+    </main>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>tama.potari</strong> by sugimoto tatsuo.
+        </p>
+      </div>
+    </footer>
+    <script src="index.js" type="module" defer></script>
   </body>
 </html>

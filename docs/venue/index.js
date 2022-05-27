@@ -1,29 +1,43 @@
+import { getData } from '../modules/getdata.js';
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-const getData = async () => {
-  const endpoint =
-    "https://script.google.com/macros/s/AKfycbxYb6A56yxS_gLG_AkWxMODItAzBrzYYT8CT3Yvxel3UlgNhau-sJnH1ZbFM-Ho_GcQkA/exec";
-  try {
-    const response = await fetch(endpoint);
-    if (response.ok) {
-      const json = await response.json();
-      return json;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+const renderVenueList = (json) => {
+  document.getElementById("content").innerHTML =
+    `<ul id="venues" class="columns is-multiline"></ul>`;
 
-const renderResponse = (res) => {
-  const venue = res.find((d) => d.id === id);
+  const venues = document.getElementById("venues");
+  for (const venue of json.filter(d => d.name !== '')) {
+    const venueNode = document.createElement("li");
+    venueNode.className = 'column is-one-quarter';
+    venueNode.innerHTML = `
+    <div class="card">
+      <div class="card-content">
+        <h3 class="title is-5">
+          <a href="./?id=${venue.id}">${venue.name}</a>
+        </h3>
+        <div class="content is-small">
+          ${venue.address}
+        </div>
+      </div>
+    </div>`;
+    venues.appendChild(venueNode);
+  }
+}
+
+const renderVenue = (json) => {
+  if (!id) {
+    renderVenueList(json);
+    return;
+  }
+
+  const venue = json.find((d) => d.id === id);
   if (venue) {
     document.getElementById("title").textContent = venue.name;
-  }
-  document.getElementById("response").value = JSON.stringify(venue, null, 2);
+    document.getElementById("content").innerHTML = `
+    ${venue.address}`;
+  };
+}
 
-  document.getElementById("content").innerHTML = `
-  ${venue.address}`;
-};
-
-getData().then((json) => renderResponse(json));
+getData().then((json) => renderVenue(json));
