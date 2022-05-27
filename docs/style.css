@@ -8,3 +8,12 @@ header {
 .navbar {
   background-color: aliceblue;
 }
+
+.content figure {
+  margin-left: 0;
+}
+.poster {
+  background-position: 50% 50%;
+  width: 100%;
+  height: 100%;
+}

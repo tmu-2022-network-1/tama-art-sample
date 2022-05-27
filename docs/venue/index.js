@@ -35,8 +35,8 @@ const renderVenue = (json) => {
   const venue = json.find((d) => d.id === id);
   if (venue) {
     document.title = `${venue.name} | tama.potari`;
-    document.getElementById("title").textContent = venue.name;
     document.getElementById("content").innerHTML = `
+    <h1 class="title is-1">${venue.name}</h1>
     ${venue.address}`;
   };
 }

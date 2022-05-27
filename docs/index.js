@@ -1,29 +1,45 @@
 import { getData } from './modules/getdata.js';
+import { DateTime } from "./modules/luxon.min.js";
 
-const renderVenues = (json) => {
-  // document.getElementById("response").value = JSON.stringify(json, null, 2);
+const renderEvents = (json) => {
+
+  console.dir(json);
 
   document.getElementById("content").innerHTML =
-    `<ul id="venues" class="columns is-multiline"></ul>`;
+    `<ul id="events" class="columns is-multiline"></ul>`;
 
-  const venues = document.getElementById("venues");
+  const venues = document.getElementById("events");
 
-  for (const venue of json.filter(d => d.name !== '')) {
+  for (const event of json.filter(d => d.title !== '')) {
+    const startDate = DateTime.fromJSDate(new Date(event.startDate));
+    const endDate = DateTime.fromJSDate(new Date(event.endDate));
+    const thumbnail = event.thumbnail !== '' ? event.thumbnail : 'images/placeholder.png';
+
     const venueNode = document.createElement("li");
     venueNode.className = 'column is-one-quarter';
     venueNode.innerHTML = `
       <div class="card">
-        <div class="card-content">
+      <div class="card-content">
           <h3 class="title is-5">
-            <a href="venue/?id=${venue.id}">${venue.name}</a>
+            <a href="event/?id=${event.id}">${event.title}</a>
           </h3>
+          <div class="content">
+          ${event.venue}
+          <div>
           <div class="content is-small">
-            ${venue.address}
+            ${startDate.setLocale('ja').toFormat('yyyy.MM.dd')} -
+            ${endDate.setLocale('ja').toFormat('yyyy.MM.dd')}
           </div>
+            <a href="event/?id=${event.id}">
+            <figure class="image is-square is-one-quarter poster" style="background-image:url(${thumbnail})">
+            <!--<div style="background-image:url(${thumbnail})"></div>-->
+            <!--<img class="poster" src="${event.thumbnail}" alt="${event.title}">-->
+          </figure>
+          </a>
         </div>
       </div>`;
     venues.appendChild(venueNode);
   }
 };
 
-getData().then((json) => renderVenues(json));
+getData('events').then((json) => renderEvents(json));
