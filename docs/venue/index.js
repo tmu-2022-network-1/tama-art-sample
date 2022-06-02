@@ -37,10 +37,30 @@ const renderVenue = (json) => {
     document.title = `${venue.name} | tama.potari`;
     document.getElementById("content").innerHTML = `
     <h1 class="title is-1">${venue.name}</h1>
-    ${venue.address}`;
+    ${venue.address}<br>
+    <a href="${venue.url}" tareget="_blank">Website</a>`;
+    renderMap(venue);
   };
+}
+
+const renderMap = (venue) => {
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic3VnaTIwMDAiLCJhIjoiY2l3anY3cWgzMDAzcTJ0cDJpdG1sZGZ3biJ9.kmev1_-7umt2LZrAMUJiyA';
+  const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/sugi2000/ckbbk7d4z0bsh1imqz84ac23a', // style URL
+    center: [venue.lon, venue.lat], // starting position [lng, lat]
+    zoom: 15 // starting zoom
+  });
+  // Create a new marker.
+  const marker = new mapboxgl.Marker()
+    .setLngLat([venue.lon, venue.lat])
+    .setPopup(new mapboxgl.Popup().setHTML(`<h1>${venue.name}</h1>`)) // add popup
+    .addTo(map);
+  marker.togglePopup(); // toggle popup open or closed
+  const nav = new mapboxgl.NavigationControl();
+  map.addControl(nav, 'top-left');
 }
 
 getData().then((json) => renderVenue(json));
 
-const map = L.map('map').setView([51.505, -0.09], 13);
+// const map = L.map('map').setView([51.505, -0.09], 13);
