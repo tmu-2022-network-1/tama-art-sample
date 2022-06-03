@@ -20,6 +20,8 @@ const renderVenueList = (json) => {
         <div class="content is-small">
           ${venue.address}
         </div>
+        <div class="content is-small distance" data-coords="${venue.lon},${venue.lat}">
+        </div>
       </div>
     </div>`;
     venues.appendChild(venueNode);
@@ -64,3 +66,23 @@ const renderMap = (venue) => {
 getData().then((json) => renderVenue(json));
 
 // const map = L.map('map').setView([51.505, -0.09], 13);
+
+document.getElementById('get-location').onclick = () => {
+  const success = (position) => {
+    // alert(position.coords.latitude, position.coords.longitude);
+    const from = turf.point([position.coords.longitude, position.coords.latitude]);
+    const elements = document.querySelectorAll('.distance');
+    for (const element of elements) {
+      const to = turf.point(element.getAttribute('data-coords').split(','));
+      const distance = turf.distance(from, to);
+      element.textContent = `現在地から${distance.toFixed(1)}km`;
+    }
+
+  }
+  const error = () => {
+    console.log('get location error');
+  }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+}
