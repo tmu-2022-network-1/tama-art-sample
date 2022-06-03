@@ -32,8 +32,6 @@ const renderEvents = (json) => {
           </div>
             <a href="event/?id=${event.id}">
             <figure class="image is-square is-one-quarter poster" style="background-image:url(${thumbnail})">
-            <!--<div style="background-image:url(${thumbnail})"></div>-->
-            <!--<img class="poster" src="${event.thumbnail}" alt="${event.title}">-->
           </figure>
           </a>
         </div>

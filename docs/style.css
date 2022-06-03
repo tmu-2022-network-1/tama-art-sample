@@ -21,3 +21,15 @@ header {
   width: 600px;
   height: 300px;
 }
+
+.preview {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background-color: #eee;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: 99;
+}
