@@ -19,7 +19,7 @@ const renderEventList = (json) => {
       <div class="card">
       <div class="card-content">
           <h3 class="title is-5">
-            <a href="event/?id=${event.id}">${event.title}</a>
+            <a href="./?id=${event.id}">${event.title}</a>
           </h3>
           <div class="content">
           ${event.venue}
@@ -28,7 +28,7 @@ const renderEventList = (json) => {
             ${startDate.setLocale('ja').toFormat('yyyy.MM.dd')} -
             ${endDate.setLocale('ja').toFormat('yyyy.MM.dd')}
           </div>
-          <a href="event/?id=${event.id}" class="event-link">
+          <a href="./?id=${event.id}" class="event-link">
             <figure class="image is-square is-one-quarter poster" style="background-image:url(${thumbnail})">
             </figure>
           </a>
@@ -39,7 +39,20 @@ const renderEventList = (json) => {
 }
 
 const renderEvent = (json) => {
-  if (!id) {
+  if (id) {
+    // const event = json.find((d) => d.id === id);
+    const event = json[0];
+    if (event) {
+      document.title = `${event.title} | tama.potari`;
+      document.getElementById("content").innerHTML = `
+        <h1>${event.title}</h1>
+        <a href="../venue/?id=${event.venueId}">${event.venue}</a>
+        <figure>
+          <img src="${event.thumbnail}" alt="${event.title}">
+        </figure>`;
+    }
+  }
+  else {
     renderEventList(json);
     const eventLinks = document.querySelectorAll('.event-link');
     for (const eventLink of eventLinks) {
@@ -47,18 +60,11 @@ const renderEvent = (json) => {
         document.querySelector('.preview').style.backgroundImage = e.target.style.backgroundImage;
       };
     }
-    return;
-  }
-  const event = json.find((d) => d.id === id);
-  if (event) {
-    document.title = `${event.title} | tama.potari`;
-    document.getElementById("content").innerHTML = `
-      <h1>${event.title}</h1>
-      <a href="../venue/?id=${event.venueId}">${event.venue}</a>
-      <figure>
-        <img src="${event.thumbnail}" alt="${event.title}">
-      </figure>`;
   }
 };
 
-getData('events').then((json) => renderEvent(json));
+if (id) {
+  getData('events', id).then((json) => renderEvent(json));
+} else {
+  getData('events').then((json) => renderEvent(json));
+}
