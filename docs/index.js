@@ -10,7 +10,21 @@ const renderEvents = (json) => {
 
   const venues = document.getElementById("events");
 
-  for (const event of json.filter(d => d.title !== '')) {
+  const sortedEvents = json
+    .filter(d => d.title !== '')
+    .filter(function (d) {
+      return d.title !== '';
+    })
+    .filter(d => {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      return new Date(d.startDate).getTime() >= today.getTime();
+    })
+    .sort((a, b) =>
+      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    );
+
+  for (const event of sortedEvents) {
     const startDate = DateTime.fromJSDate(new Date(event.startDate));
     const endDate = DateTime.fromJSDate(new Date(event.endDate));
     const thumbnail = event.thumbnail !== '' ? event.thumbnail : 'images/placeholder.png';
