@@ -18,8 +18,7 @@ const renderEvents = (json) => {
     .filter(d => {
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      return new Date(d.endDate).getTime() >= today.getTime() ||
-        new Date(d.startDate).getTime() >= today.getTime();
+      return new Date(d.startDate).getTime() >= today.getTime();
     })
     .sort((a, b) =>
       new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
